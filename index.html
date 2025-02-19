@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student ID Generator</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; }
+        input, button { margin: 10px; padding: 10px; }
+        canvas { border: 1px solid black; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h2>Enter Your Name to Generate Your ID</h2>
+    <input type="text" id="studentName" placeholder="Enter your name">
+    <button onclick="generateID()">Generate ID</button>
+    <canvas id="idCanvas"></canvas>
+    <br>
+    <button onclick="downloadID()">Download ID</button>
+
+    <script>
+        function generateID() {
+            let name = document.getElementById("studentName").value;
+            let canvas = document.getElementById("idCanvas");
+            let ctx = canvas.getContext("2d");
+
+            let img = new Image();
+            img.src = "id_template.png";  // Make sure this file is uploaded in the same folder
+
+            img.onload = function() {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+                
+                ctx.font = "20px Arial";
+                ctx.fillStyle = "black";
+                ctx.fillText(name, 150, 200);  // Adjust position if needed
+            };
+        }
+
+        function downloadID() {
+            let canvas = document.getElementById("idCanvas");
+            let link = document.createElement("a");
+            link.download = "Student_ID.png";
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+    </script>
+</body>
+</html>
